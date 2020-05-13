@@ -24,7 +24,7 @@ smtp_receivers = [''] # This is the TO email address
 # This is the message that will be sent when NO moisture is detected
 
 message_dead = """From: Sender Name <>
-To: Receiver Name <>
+To: Receiver Name <@gmail.com>
 Subject: Moisture Sensor Notification
 
 Warning, no moisture detected! Plant death imminent!!! :'(
@@ -32,8 +32,8 @@ Warning, no moisture detected! Plant death imminent!!! :'(
 
 # This is the message that will be sent when moisture IS detected again
 
-message_alive = """From: Sender Name <>
-To: Receiver Name <>
+message_alive = """From: Sender Name <@gmail.com>
+To: Receiver Name <@gmail.com>
 Subject: Moisture Sensor Notification
 
 Panic over! Plant has water again :)
@@ -44,12 +44,12 @@ Panic over! Plant has water again :)
 def sendEmail(smtp_message):
 	try:
 		smtpObj = smtplib.SMTP(smtp_host, smtp_port)
-        smtpObj.connect(smtp_host, smtp_port)
-        smtpObj.ehlo()
-        smtpObj.starttls()
-        smtpObj.ehlo()
+		smtpObj.connect(smtp_host, smtp_port)
+		smtpObj.ehlo()
+		smtpObj.starttls()
+		smtpObj.ehlo()
 		smtpObj.login(smtp_username, smtp_password) # If you don't need to login to your smtp provider, simply remove this line
-		smtpObj.sendmail(smtp_sender, smtp_receivers, message_alive)         
+		smtpObj.sendmail(smtp_sender, smtp_receivers, smtp_message)         
 		print("Successfully sent email")
 	except smtplib.SMTPException:
 		print("Error: unable to send email")
